@@ -24,7 +24,7 @@ chown apache:apache ./*
 ###   Installing the some package of php for run the wordpress in instance.
 sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
 
-###   Give the Configration of MySQL Server. 
+###   Give the Configration of MySQL Server. Put the name of Database, username and etc. ###
 cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 sed -i 's/database_name_here/wpDB/' /var/www/html/wp-config.php
 sed -i 's/username_here/admin/' /var/www/html/wp-config.php
