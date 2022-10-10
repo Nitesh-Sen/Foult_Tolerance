@@ -1,10 +1,35 @@
 #!/bin/bash
 
-###   Make the directory path  
+###   Make the directory path.
 mkdir -p /var/www/html/
 
-###   Mount the volume with instance 
+###   Mount the volume with instance.
 sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0730a2620eebf1b5e.efs.us-east-1.amazonaws.com:/ /var/www/html/
 
-###   Mounting your Amazon EFS file system automatically whenever you reboot your instance
+###   Mounting your Amazon EFS file system automatically whenever you reboot your instance.
 echo "fs-0730a2620eebf1b5e.efs.us-east-1.amazonaws.com:/ /var/www/html/ nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0"  >> /etc/fstab
+
+###   Installation of Apache And remove the index file of apache.
+yum install -y httpd && systemctl start httpd && systemctl enable httpd && cd /var/www/html/ && rm -rf index.html
+
+###   Download the Wordpress Zip file.
+wget https://wordpress.org/latest.tar.gz
+
+###   Unzip the Wordpress Zip file and move to in /var/www/html directory.
+tar -xzf latest.tar.gz && mv wordpress/* ./
+
+###   make the apache owner of all wordpress files.
+chown apache:apache ./*
+
+###   Installing the some package of php for run the wordpress in instance.
+sudo amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
+
+###   Give the Configration of MySQL Server. 
+cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+sed -i 's/database_name_here/wpDB/' /var/www/html/wp-config.php
+sed -i 's/username_here/admin/' /var/www/html/wp-config.php
+sed -i 's/password_here/password/' /var/www/html/wp-config.php
+sed -i 's/localhost/database-1.cwxxxxxbuz.us-east-1.rds.amazonaws.com/' /var/www/html/wp-config.php
+
+###   Reload the Apahce
+sudo systemctl reload httpd
