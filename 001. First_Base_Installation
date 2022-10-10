@@ -33,3 +33,5 @@ sed -i 's/localhost/database-1.cwxxxxxbuz.us-east-1.rds.amazonaws.com/' /var/www
 
 ###   Reload the Apahce
 sudo systemctl reload httpd
+###   Restart the Apache (this is complarsy other wise you will face 503 error in website)
+sudo systemctl restart httpd
