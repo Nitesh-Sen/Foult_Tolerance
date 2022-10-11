@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd /home/ec2-user
+
+###   copy the file from s3 bucket.
+aws s3 cp s3://fault-tolerence/a_Wordpress.sh .
+
+###   give extract permission to that file. which was you copied from s3 bucket. 
+chmod +x /home/ec2-user/a_Wordpress.sh
+
+###   Run that file with Bash
+/usr/bin/bash /home/ec2-user/a_Wordpress.sh
