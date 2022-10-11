@@ -4,10 +4,10 @@
 mkdir -p /var/www/html/
 
 ###   Mount the volume with instance.
-sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0730a2620eebf1b5e.efs.us-east-1.amazonaws.com:/ /var/www/html/
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0xxxxxxxxxxe.efs.us-east-1.amazonaws.com:/ /var/www/html/
 
 ###   Mounting your Amazon EFS file system automatically whenever you reboot your instance.
-echo "fs-0730a2620eebf1b5e.efs.us-east-1.amazonaws.com:/ /var/www/html/ nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0"  >> /etc/fstab
+echo "fs-0xxxxxxxxxxe.efs.us-east-1.amazonaws.com:/ /var/www/html/ nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport,_netdev 0 0"  >> /etc/fstab
 
 ###   Installation of Apache And remove the index file of apache.
 yum install -y httpd && systemctl start httpd && systemctl enable httpd && cd /var/www/html/ && rm -rf index.html
