@@ -40,5 +40,17 @@ sed -i 's/# logs_enabled: false/logs_enabled: true/' /etc/datadog-agent/datadog.
 ###   Change the permissions of apache logs file. Recurcive(-R) 
 cd /var/log/ && sudo chmod 655 -R httpd
 
-###   Start and Enable the Datadog-Agent
+###   Restart the Datadog-Agent
+systemctl restart datadog-agent
+
+###   Copy the configured httpd.conf file from s3 bucket
+aws s3 cp s3://fault-tolerence/httpd.conf /etc/httpd/conf/
+
+###   Copy the configured conf.yaml file from s3 bucket
+aws s3 cp s3://fault-tolerence/conf.yaml /etc/datadog-agent/conf.d/apache.d/
+
+###  Restart the Apache
+systemctl restart httpd
+
+###   Restart the Datadog-Agent
 systemctl restart datadog-agent
