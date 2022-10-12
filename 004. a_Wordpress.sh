@@ -30,6 +30,9 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC1WIsgAWS23riR/jxxxxxxxxxxxxxxxxxxxx
 ###   Install the Datadog-Agent in Instance
 DD_AGENT_MAJOR_VERSION=7 DD_API_KEY=6xxxxxxxxxxxxxxxxxxxxxxxx5 DD_SITE="datadoghq.com" bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh)"
 
+###   enable the logs in datadog agent
+sed -i 's/# logs_enabled: false/logs_enabled: true/' /etc/datadog-agent/datadog.yaml
+
 ###   Start and Enable the Datadog-Agent
 systemctl start datadog-agent
 sudo systemctl enable datadog-agent
